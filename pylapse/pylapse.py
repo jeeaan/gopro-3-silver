@@ -68,6 +68,22 @@ def list_captures():
         capture_files.append(capture_file)
     return capture_files
 
+def command_send(device, command, value, debug=True):
+    """Use the GoPro wireless server to send a command """
+
+    # For some of the commands there are not values. In this case, we doesn
+    # not add a % to the value argument
+    if value != '':
+        value = '%' + value
+    url = 'http://' + IP + '/' + device + '/' + command + \
+          '?t=' + PASSWORD + '&' + 'p=' + value
+    print url
+
+    f = urllib2.urlopen(url)
+    if debug:
+        print 'Response code'
+        print f.getcode()
+
 def main():
 
    lapse = True
